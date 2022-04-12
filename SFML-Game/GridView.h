@@ -11,6 +11,7 @@ class GridView{
 		GridView(const GridView&) = delete;  //no copy 
 		GridView& operator=(const GridView&) = delete; //no copy assign
 		void drawGrid();
+		void processEvents(sf::Event);
 
 	private:
 		int grid_sz;

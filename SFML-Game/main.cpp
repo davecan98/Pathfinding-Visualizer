@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "GridView.h"
+#include <iostream>
 
 int main()
 {
@@ -12,8 +13,7 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
-                window.close();
+            gridView.processEvents(event);
         }
 
         window.clear();

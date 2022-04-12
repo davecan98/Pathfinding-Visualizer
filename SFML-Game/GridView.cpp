@@ -2,7 +2,7 @@
 #include <iostream>
 
 //contructor
-GridView::GridView(sf::RenderWindow *win, int grid_size=100) : window(win), grid_sz(grid_size) {
+GridView::GridView(sf::RenderWindow *win, int grid_size=20) : window(win), grid_sz(grid_size) {
 
     
     tile_size_x = window->getSize().x / grid_size;
@@ -31,5 +31,21 @@ void GridView::drawGrid() {
             window->draw(grid[i][j]);
         }
     }
+}
+
+void GridView::processEvents(sf::Event event) {
+
+    if (event.type == sf::Event::Closed)
+        window->close();
+
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    {
+        int tile_x = (static_cast<float>(event.mouseButton.x)/tile_size_x);
+        int tile_y = (static_cast<float>(event.mouseButton.y)/tile_size_y);
+
+        grid[tile_x][tile_y].setFillColor(sf::Color::Black);
+    }
+
+
 
 }
