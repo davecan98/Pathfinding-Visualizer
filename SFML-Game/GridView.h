@@ -7,24 +7,17 @@
 class GridView{
 
 	public:
-		GridView();
-		
-		
+		GridView(sf::RenderWindow* win, int);
 		GridView(const GridView&) = delete;  //no copy 
 		GridView& operator=(const GridView&) = delete; //no copy assign
-		~GridView() = default; //default detructor
-
-		void update();
+		void drawGrid();
 
 	private:
-		static constexpr int tile_sz = 20;
-		static constexpr int grid_sz = 50;
-		sf::RenderWindow window;
-		sf::RectangleShape grid[grid_sz][grid_sz];
-
-		void drawRectangles();
-		
-		
+		int grid_sz;
+		int tile_size_x;
+		int tile_size_y;
+		sf::RenderWindow *window;
+		std::vector<std::vector<sf::RectangleShape>> grid;
 };
 
 #endif GRID_VIEW

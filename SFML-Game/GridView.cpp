@@ -2,42 +2,34 @@
 #include <iostream>
 
 //contructor
-GridView::GridView() : window(sf::VideoMode(1000, 1000), "Pathfinding Visualizer", sf::Style::Titlebar | sf::Style::Close){
+GridView::GridView(sf::RenderWindow *win, int grid_size=100) : window(win), grid_sz(grid_size) {
 
-    for (int i = 0; i < grid_sz; i++) {
-        for (int j = 0; j < grid_sz; j++) {
-            sf::RectangleShape& rec = grid[i][j];
-            rec.setSize(sf::Vector2f(tile_sz, tile_sz));
-            rec.setPosition(i* tile_sz,j* tile_sz);
+    
+    tile_size_x = window->getSize().x / grid_size;
+    tile_size_y = window->getSize().y / grid_size;
+
+    for (int i = 0; i < grid_size; i++) {
+
+        grid.push_back(std::vector<sf::RectangleShape>());
+
+        for (int j = 0; j < grid_size; j++) {
+
+            grid[i].emplace_back(sf::Vector2f(tile_size_x, tile_size_y)); //create a new rectangle and push into vector
+
+            sf::RectangleShape &rec = grid[i][j];
+            rec.setPosition(i* tile_size_x,j* tile_size_y);
             rec.setOutlineColor(sf::Color::Black);
             rec.setOutlineThickness(1);
         }
     }
 }
 
-void GridView::drawRectangles() {
+void GridView::drawGrid() {
 
     for (int i = 0; i < grid_sz; i++) {
         for (int j = 0; j < grid_sz; j++) {
-            window.draw(grid[i][j]);
+            window->draw(grid[i][j]);
         }
     }
 
-}
-
-void GridView::update() {
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear(sf::Color::White);
-        drawRectangles();
-        window.display();
-    }
 }
