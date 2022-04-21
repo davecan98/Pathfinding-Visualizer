@@ -40,12 +40,43 @@ void GridView::processEvents(sf::Event event) {
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
-        int tile_x = (static_cast<float>(event.mouseButton.x)/tile_size_x);
-        int tile_y = (static_cast<float>(event.mouseButton.y)/tile_size_y);
-
-        grid[tile_x][tile_y].setFillColor(sf::Color::Black);
+        setTile(event.mouseButton.x, event.mouseButton.y, sf::Color::Black);
+        mouseHeld = true;
     }
 
 
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right)
+    {
+        int tile_x = static_cast<float>(event.mouseButton.x / tile_size_x);
+        int tile_y = static_cast<float>(event.mouseButton.y / tile_size_y);
 
+        grid[tile_x][tile_y].setFillColor(sf::Color::Blue);
+
+        if (selectedTarget) //previously selected target
+        {
+            selectedTarget->setFillColor(sf::Color::White); //set transparent color
+        }
+
+        selectedTarget = &grid[tile_x][tile_y]; //remember the selected target
+
+    }
+
+    if (event.type == sf::Event::MouseMoved && mouseHeld)
+    {
+        setTile(event.mouseMove.x, event.mouseMove.y, sf::Color::Black);
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+    {
+        std::cout << "released";
+        mouseHeld = false;
+    }
+}
+
+void GridView::setTile(int x_pos, int y_pos, sf::Color col)
+{
+    int tile_x = static_cast<float>(x_pos / tile_size_x);
+    int tile_y = static_cast<float>(y_pos / tile_size_y);
+
+    grid[tile_x][tile_y].setFillColor(col);
 }
