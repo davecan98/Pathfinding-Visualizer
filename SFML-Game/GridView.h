@@ -7,21 +7,21 @@
 class GridView{
 
 	public:
-		GridView(sf::RenderWindow* win, int);
+		GridView(std::shared_ptr<sf::RenderWindow>, int);
 		GridView(const GridView&) = delete;  //no copy 
 		GridView& operator=(const GridView&) = delete; //no copy assign
 		void drawGrid();
-		void processEvents(sf::Event);
+		void setTileColor(int, int, sf::Color);
+		int getTileSize_X() { return tile_size_x; }
+		int getTileSize_Y() { return tile_size_y; }
 
 	private:
-		bool mouseHeld = false;
-		sf::RectangleShape* selectedTarget = NULL;
 		int grid_sz;
 		int tile_size_x;
 		int tile_size_y;
-		sf::RenderWindow *window;
+		std::shared_ptr<sf::RenderWindow> window;
 		std::vector<std::vector<sf::RectangleShape>> grid;
-		void setTile(int, int,sf::Color);
+		
 
 };
 
